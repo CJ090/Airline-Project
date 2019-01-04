@@ -1,0 +1,113 @@
+spirit_pos = 'courteous beat definitely negative brought fast plenty often myrtle friendly pleased traveled light review newer no-frills nervous fairly helpful carte excellent pleasant awesome wide movie comfy great beach value used professional pack smooth heard efficient direct roomy timely adequate process satisfied sleep security 35 turned research'
+spirit_neg = 'asked worst call cancel called rude refund horrible something making leave told supposed avoid trying charged someone behind carryon unless weather phone per wrong fact tiny type 12 hit limit employee done terrible cancellation life rest spent hidden card said cancelled another end customer recieved ridiculous finally 45 uncomfortable chair saw addition changed'
+united_pos = 'pleasantly outstanding enjoyable amazing efficient easily timely pleased on-time perfect surprised quickly excellent accommodating beautiful perfectly reasonable tasty appreciated loved enjoyed attentive courteous smoothly professional pod rome easy handled updated spot tuesday'
+united_neg = 'rude horrible worst announced lb missing explanation rebooked mediocre comment entry dirty minimal fan 300 worse told 2017 maintenance telling awful wrong tell barely 75 stuff filthy whatever boise towards female weird sent sardine passport spoke anniversary apparently ridiculous site poor runway annoying april treatment charged cold showed armrest switched fell injury fuel nickle biggest edinburgh, realize suck male toronto pick advised policy travelling woman idea refused'
+frontier_pos = 'myers wish fort surprised included excellent always space spring pack airbus buffalo route clean overall smooth easy priority wonderful recently pick definitely inexpensive great complain highly economical safe prepared run friendly worried non-stop near inslip courteous ahead pleasant nice love quite fasy ons review'
+frontier_neg = 'told reason sitting rude try changed ended worst uncomfortable 45 announcement complimentary anyone might finally later whole call apple started someone ever said hard trying close ago normal tried table charged cancel orleans hr believe horrible tell unless mechanical gave card cancelled morning realized group pre 35 company sent life matter supposed thru tsa party'
+american_pos = 'smooth polite often chose quick friendly easy efficient enjoyed helpful love morning opinion island rest wine kind espicially impressed coach newer great excellent without far always best busy'
+american_neg = 'second rude story upgraded anything prior desk twice told custome said worseran pm washington large mechanical find 2 finally paid device heard nightmare may cattle york therefore heathrow longer pas isle preffered 2018 fit mean empty 10 itinerary stuck cancellation agent dissapointing lack dollar talking sent trouble 2nd power slow write frequently happens miss mexico runway yes glass uncomfortable yet serve basic fact 1 something let purchased sitting status'
+from nltk.tokenize import word_tokenize
+spirit_pos = word_tokenize(spirit_pos)
+spirit_neg = word_tokenize(spirit_neg)
+united_pos = word_tokenize(united_pos)
+united_neg = word_tokenize(united_neg)
+frontier_pos = word_tokenize(frontier_pos)
+frontier_neg = word_tokenize(frontier_neg)
+american_pos = word_tokenize(american_pos)
+american_neg = word_tokenize(american_neg)
+data = [[spirit_pos, spirit_neg, united_pos, united_neg, frontier_pos, frontier_neg, american_pos, american_neg]]
+print(data)
+print(spirit_pos)
+['courteous', 'beat', 'definitely', 'negative', 'brought', 'fast', 'plenty', 'often', 'myrtle', 'friendly', 'pleased', 'traveled', 'light', 'review', 'newer', 'no-frills', 'nervous', 'fairly', 'helpful', 'carte', 'excellent', 'pleasant', 'awesome', 'wide', 'movie', 'comfy', 'great', 'beach', 'value', 'used', 'professional', 'pack', 'smooth', 'heard', 'efficient', 'direct', 'roomy', 'timely', 'adequate', 'process', 'satisfied', 'sleep', 'security', '35', 'turned', 'research']
+print(spirit_neg)
+['asked', 'worst', 'call', 'cancel', 'called', 'rude', 'refund', 'horrible', 'something', 'making', 'leave', 'told', 'supposed', 'avoid', 'trying', 'charged', 'someone', 'behind', 'carryon', 'unless', 'weather', 'phone', 'per', 'wrong', 'fact', 'tiny', 'type', '12', 'hit', 'limit', 'employee', 'done', 'terrible', 'cancellation', 'life', 'rest', 'spent', 'hidden', 'card', 'said', 'cancelled', 'another', 'end', 'customer', 'recieved', 'ridiculous', 'finally', '45', 'uncomfortable', 'chair', 'saw', 'addition', 'changed']
+print(united_pos)
+['pleasantly', 'outstanding', 'enjoyable', 'amazing', 'efficient', 'easily', 'timely', 'pleased', 'on-time', 'perfect', 'surprised', 'quickly', 'excellent', 'accommodating', 'beautiful', 'perfectly', 'reasonable', 'tasty', 'appreciated', 'loved', 'enjoyed', 'attentive', 'courteous', 'smoothly', 'professional', 'pod', 'rome', 'easy', 'handled', 'updated', 'spot', 'tuesday']
+print(united_neg)
+['rude', 'horrible', 'worst', 'announced', 'lb', 'missing', 'explanation', 'rebooked', 'mediocre', 'comment', 'entry', 'dirty', 'minimal', 'fan', '300', 'worse', 'told', '2017', 'maintenance', 'telling', 'awful', 'wrong', 'tell', 'barely', '75', 'stuff', 'filthy', 'whatever', 'boise', 'towards', 'female', 'weird', 'sent', 'sardine', 'passport', 'spoke', 'anniversary', 'apparently', 'ridiculous', 'site', 'poor', 'runway', 'annoying', 'april', 'treatment', 'charged', 'cold', 'showed', 'armrest', 'switched', 'fell', 'injury', 'fuel', 'nickle', 'biggest', 'edinburgh', ',', 'realize', 'suck', 'male', 'toronto', 'pick', 'advised', 'policy', 'travelling', 'woman', 'idea', 'refused']
+print(frontier_pos)
+['myers', 'wish', 'fort', 'surprised', 'included', 'excellent', 'always', 'space', 'spring', 'pack', 'airbus', 'buffalo', 'route', 'clean', 'overall', 'smooth', 'easy', 'priority', 'wonderful', 'recently', 'pick', 'definitely', 'inexpensive', 'great', 'complain', 'highly', 'economical', 'safe', 'prepared', 'run', 'friendly', 'worried', 'non-stop', 'near', 'inslip', 'courteous', 'ahead', 'pleasant', 'nice', 'love', 'quite', 'fasy', 'ons', 'review']
+print(frontier_neg)
+['told', 'reason', 'sitting', 'rude', 'try', 'changed', 'ended', 'worst', 'uncomfortable', '45', 'announcement', 'complimentary', 'anyone', 'might', 'finally', 'later', 'whole', 'call', 'apple', 'started', 'someone', 'ever', 'said', 'hard', 'trying', 'close', 'ago', 'normal', 'tried', 'table', 'charged', 'cancel', 'orleans', 'hr', 'believe', 'horrible', 'tell', 'unless', 'mechanical', 'gave', 'card', 'cancelled', 'morning', 'realized', 'group', 'pre', '35', 'company', 'sent', 'life', 'matter', 'supposed', 'thru', 'tsa', 'party']
+print(american_pos)
+['smooth', 'polite', 'often', 'chose', 'quick', 'friendly', 'easy', 'efficient', 'enjoyed', 'helpful', 'love', 'morning', 'opinion', 'island', 'rest', 'wine', 'kind', 'espicially', 'impressed', 'coach', 'newer', 'great', 'excellent', 'without', 'far', 'always', 'best', 'busy']
+print(american_neg)
+['second', 'rude', 'story', 'upgraded', 'anything', 'prior', 'desk', 'twice', 'told', 'custome', 'said', 'worseran', 'pm', 'washington', 'large', 'mechanical', 'find', '2', 'finally', 'paid', 'device', 'heard', 'nightmare', 'may', 'cattle', 'york', 'therefore', 'heathrow', 'longer', 'pas', 'isle', 'preffered', '2018', 'fit', 'mean', 'empty', '10', 'itinerary', 'stuck', 'cancellation', 'agent', 'dissapointing', 'lack', 'dollar', 'talking', 'sent', 'trouble', '2nd', 'power', 'slow', 'write', 'frequently', 'happens', 'miss', 'mexico', 'runway', 'yes', 'glass', 'uncomfortable', 'yet', 'serve', 'basic', 'fact', '1', 'something', 'let', 'purchased', 'sitting', 'status']
+pos_set = [american_pos + frontier_pos + united_pos + spirit_pos]
+neg_set = [american_neg + frontier_neg + united_neg + spirit_neg]
+print(word_set)
+[['second', 'rude', 'story', 'upgraded', 'anything', 'prior', 'desk', 'twice', 'told', 'custome', 'said', 'worseran', 'pm', 'washington', 'large', 'mechanical', 'find', '2', 'finally', 'paid', 'device', 'heard', 'nightmare', 'may', 'cattle', 'york', 'therefore', 'heathrow', 'longer', 'pas', 'isle', 'preffered', '2018', 'fit', 'mean', 'empty', '10', 'itinerary', 'stuck', 'cancellation', 'agent', 'dissapointing', 'lack', 'dollar', 'talking', 'sent', 'trouble', '2nd', 'power', 'slow', 'write', 'frequently', 'happens', 'miss', 'mexico', 'runway', 'yes', 'glass', 'uncomfortable', 'yet', 'serve', 'basic', 'fact', '1', 'something', 'let', 'purchased', 'sitting', 'status', 'smooth', 'polite', 'often', 'chose', 'quick', 'friendly', 'easy', 'efficient', 'enjoyed', 'helpful', 'love', 'morning', 'opinion', 'island', 'rest', 'wine', 'kind', 'espicially', 'impressed', 'coach', 'newer', 'great', 'excellent', 'without', 'far', 'always', 'best', 'busy', 'told', 'reason', 'sitting', 'rude', 'try', 'changed', 'ended', 'worst', 'uncomfortable', '45', 'announcement', 'complimentary', 'anyone', 'might', 'finally', 'later', 'whole', 'call', 'apple', 'started', 'someone', 'ever', 'said', 'hard', 'trying', 'close', 'ago', 'normal', 'tried', 'table', 'charged', 'cancel', 'orleans', 'hr', 'believe', 'horrible', 'tell', 'unless', 'mechanical', 'gave', 'card', 'cancelled', 'morning', 'realized', 'group', 'pre', '35', 'company', 'sent', 'life', 'matter', 'supposed', 'thru', 'tsa', 'party', 'myers', 'wish', 'fort', 'surprised', 'included', 'excellent', 'always', 'space', 'spring', 'pack', 'airbus', 'buffalo', 'route', 'clean', 'overall', 'smooth', 'easy', 'priority', 'wonderful', 'recently', 'pick', 'definitely', 'inexpensive', 'great', 'complain', 'highly', 'economical', 'safe', 'prepared', 'run', 'friendly', 'worried', 'non-stop', 'near', 'inslip', 'courteous', 'ahead', 'pleasant', 'nice', 'love', 'quite', 'fasy', 'ons', 'review', 'rude', 'horrible', 'worst', 'announced', 'lb', 'missing', 'explanation', 'rebooked', 'mediocre', 'comment', 'entry', 'dirty', 'minimal', 'fan', '300', 'worse', 'told', '2017', 'maintenance', 'telling', 'awful', 'wrong', 'tell', 'barely', '75', 'stuff', 'filthy', 'whatever', 'boise', 'towards', 'female', 'weird', 'sent', 'sardine', 'passport', 'spoke', 'anniversary', 'apparently', 'ridiculous', 'site', 'poor', 'runway', 'annoying', 'april', 'treatment', 'charged', 'cold', 'showed', 'armrest', 'switched', 'fell', 'injury', 'fuel', 'nickle', 'biggest', 'edinburgh', ',', 'realize', 'suck', 'male', 'toronto', 'pick', 'advised', 'policy', 'travelling', 'woman', 'idea', 'refused', 'pleasantly', 'outstanding', 'enjoyable', 'amazing', 'efficient', 'easily', 'timely', 'pleased', 'on-time', 'perfect', 'surprised', 'quickly', 'excellent', 'accommodating', 'beautiful', 'perfectly', 'reasonable', 'tasty', 'appreciated', 'loved', 'enjoyed', 'attentive', 'courteous', 'smoothly', 'professional', 'pod', 'rome', 'easy', 'handled', 'updated', 'spot', 'tuesday', 'asked', 'worst', 'call', 'cancel', 'called', 'rude', 'refund', 'horrible', 'something', 'making', 'leave', 'told', 'supposed', 'avoid', 'trying', 'charged', 'someone', 'behind', 'carryon', 'unless', 'weather', 'phone', 'per', 'wrong', 'fact', 'tiny', 'type', '12', 'hit', 'limit', 'employee', 'done', 'terrible', 'cancellation', 'life', 'rest', 'spent', 'hidden', 'card', 'said', 'cancelled', 'another', 'end', 'customer', 'recieved', 'ridiculous', 'finally', '45', 'uncomfortable', 'chair', 'saw', 'addition', 'changed', 'courteous', 'beat', 'definitely', 'negative', 'brought', 'fast', 'plenty', 'often', 'myrtle', 'friendly', 'pleased', 'traveled', 'light', 'review', 'newer', 'no-frills', 'nervous', 'fairly', 'helpful', 'carte', 'excellent', 'pleasant', 'awesome', 'wide', 'movie', 'comfy', 'great', 'beach', 'value', 'used', 'professional', 'pack', 'smooth', 'heard', 'efficient', 'direct', 'roomy', 'timely', 'adequate', 'process', 'satisfied', 'sleep', 'security', '35', 'turned', 'research']]
+wordfreq_pos = {}
+
+words = pos_set
+
+for word in pos_set[0]:
+    if word not in wordfreq_pos:
+        wordfreq_pos[word] = 0 
+    wordfreq_pos[word] += 1
+    
+for w, f in wordfreq_pos.items():
+    if f > 1:
+        print(w,f)
+smooth 3
+often 2
+friendly 3
+easy 3
+efficient 3
+enjoyed 2
+helpful 2
+love 2
+newer 2
+great 3
+excellent 4
+always 2
+surprised 2
+pack 2
+definitely 2
+courteous 3
+pleasant 2
+review 2
+timely 2
+pleased 2
+professional 2
+wordfreq_neg = {}
+
+words = neg_set
+
+for word in neg_set[0]:
+    if word not in wordfreq_neg:
+        wordfreq_neg[word] = 0 
+    wordfreq_neg[word] += 1
+    
+for w, f in wordfreq_neg.items():
+    if f > 1:
+        print(w,f)
+rude 4
+told 4
+said 3
+mechanical 2
+finally 3
+cancellation 2
+sent 3
+runway 2
+uncomfortable 3
+fact 2
+something 2
+sitting 2
+changed 2
+worst 3
+45 2
+call 2
+someone 2
+trying 2
+charged 3
+cancel 2
+horrible 3
+tell 2
+unless 2
+card 2
+cancelled 2
+life 2
+supposed 2
+wrong 2
+ridiculous 2
