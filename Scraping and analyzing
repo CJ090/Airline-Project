@@ -1,0 +1,241 @@
+from selenium import webdriver
+import time
+from bs4 import BeautifulSoup
+import csv
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import string
+from nltk.stem import WordNetLemmatizer
+import random
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify import DecisionTreeClassifier
+from nltk.classify import SklearnClassifier
+from sklearn.svm import SVC
+from nltk.classify import MaxentClassifier
+from nltk.metrics.scores import (accuracy, precision, recall, f_measure)
+from nltk.classify.util import accuracy
+import collections
+browser = webdriver.Firefox()
+dataset = []
+for i in range(0,4360,10):
+    url =  'https://www.tripadvisor.com/Airline_Review-d8729177-Reviews-Cheap-Flights-or'+ str(i)
+    browser.get(url)
+    time.sleep(5)
+    more_links = browser.find_elements_by_xpath("//span[@class='taLnk ulBlueLinks']")
+    for l in more_links:
+        try:
+            l.click()
+        except:
+            pass
+    html = browser.page_source
+    soup = BeautifulSoup(html, "lxml")
+    review_blocks = soup.find_all('div', 'reviewSelector')   
+    for r in review_blocks:
+        int_rating = int(r.find('span','ui_bubble_rating')['class'][1].split('_')[1])//10
+        if int_rating > 3:
+            rating = 'pos'
+        else:
+            rating = 'neg'
+        review = r.p.text
+        dataset.append((rating,review))
+
+browser.quit()
+print('Positive: ' + str(sum(1 for t in dataset if t[0] == 'pos')))
+print('Negative: ' + str(sum(1 for t in dataset if t[0] == 'neg')))
+Positive: 2310
+Negative: 2050
+characters_to_remove = ["''",'``',"rt","https","’","“","”","\u200b","--","n't","'s","...","//t.c"]
+wordnet_lemmatizer = WordNetLemmatizer()
+
+
+def bow_features(review):
+    words = word_tokenize(review)
+    words = [word.lower() for word in words]
+    words = [word for word in words if word not in set(characters_to_remove)]
+    words = [word for word in words if word not in stopwords.words("english")]
+    words = [word for word in words if word not in set(string.punctuation[1:])]
+
+    lemma_list = [wordnet_lemmatizer.lemmatize(word) for word in words]
+    my_dict = dict([(word, True) for word in lemma_list])
+    return my_dict
+f_dataset =[(bow_features(dataset[i][1]), dataset[i][0]) for i in range(len(dataset))]
+random.shuffle(f_dataset)
+train_set, test_set = f_dataset[:int(len(f_dataset)*.75)], f_dataset[int(len(f_dataset)*.75):]
+nb_classifier = nltk.NaiveBayesClassifier.train(train_set)
+print(nltk.classify.accuracy(nb_classifier, test_set))
+nb_classifier.show_most_informative_features(100)
+0.7394495412844037
+Most Informative Features
+              pleasantly = True              pos : neg    =     15.6 : 1.0
+                    rude = True              neg : pos    =     14.4 : 1.0
+                horrible = True              neg : pos    =     13.8 : 1.0
+             outstanding = True              pos : neg    =     12.1 : 1.0
+               enjoyable = True              pos : neg    =     10.4 : 1.0
+                   worst = True              neg : pos    =     10.0 : 1.0
+               announced = True              neg : pos    =      9.7 : 1.0
+                      lb = True              neg : pos    =      9.4 : 1.0
+                 missing = True              neg : pos    =      8.7 : 1.0
+             explanation = True              neg : pos    =      8.7 : 1.0
+                rebooked = True              neg : pos    =      8.7 : 1.0
+                 amazing = True              pos : neg    =      8.4 : 1.0
+                mediocre = True              neg : pos    =      8.4 : 1.0
+                 comment = True              neg : pos    =      7.9 : 1.0
+                   entry = True              neg : pos    =      7.9 : 1.0
+               efficient = True              pos : neg    =      7.6 : 1.0
+                   dirty = True              neg : pos    =      7.5 : 1.0
+                  easily = True              pos : neg    =      7.4 : 1.0
+                  timely = True              pos : neg    =      7.4 : 1.0
+                 pleased = True              pos : neg    =      7.2 : 1.0
+                 minimal = True              neg : pos    =      7.2 : 1.0
+                     fan = True              neg : pos    =      7.2 : 1.0
+                     300 = True              neg : pos    =      7.2 : 1.0
+                   worse = True              neg : pos    =      7.1 : 1.0
+                    told = True              neg : pos    =      7.1 : 1.0
+                    2017 = True              neg : pos    =      7.0 : 1.0
+                 on-time = True              pos : neg    =      6.9 : 1.0
+                 perfect = True              pos : neg    =      6.9 : 1.0
+             maintenance = True              neg : pos    =      6.6 : 1.0
+               surprised = True              pos : neg    =      6.4 : 1.0
+                 telling = True              neg : pos    =      6.4 : 1.0
+                   awful = True              neg : pos    =      6.3 : 1.0
+                 quickly = True              pos : neg    =      6.2 : 1.0
+                   wrong = True              neg : pos    =      6.2 : 1.0
+                    tell = True              neg : pos    =      6.2 : 1.0
+                  barely = True              neg : pos    =      6.0 : 1.0
+                      75 = True              neg : pos    =      5.7 : 1.0
+                   stuff = True              neg : pos    =      5.7 : 1.0
+                  filthy = True              neg : pos    =      5.7 : 1.0
+                whatever = True              neg : pos    =      5.7 : 1.0
+                   boise = True              neg : pos    =      5.7 : 1.0
+                 towards = True              neg : pos    =      5.7 : 1.0
+                  female = True              neg : pos    =      5.7 : 1.0
+                   weird = True              neg : pos    =      5.7 : 1.0
+                    sent = True              neg : pos    =      5.7 : 1.0
+                 sardine = True              neg : pos    =      5.7 : 1.0
+                passport = True              neg : pos    =      5.7 : 1.0
+                   spoke = True              neg : pos    =      5.7 : 1.0
+             anniversary = True              neg : pos    =      5.7 : 1.0
+              apparently = True              neg : pos    =      5.7 : 1.0
+              ridiculous = True              neg : pos    =      5.7 : 1.0
+                    site = True              neg : pos    =      5.7 : 1.0
+               excellent = True              pos : neg    =      5.6 : 1.0
+           accommodating = True              pos : neg    =      5.6 : 1.0
+               beautiful = True              pos : neg    =      5.6 : 1.0
+               perfectly = True              pos : neg    =      5.6 : 1.0
+              reasonably = True              pos : neg    =      5.6 : 1.0
+                   tasty = True              pos : neg    =      5.6 : 1.0
+             appreciated = True              pos : neg    =      5.5 : 1.0
+                   loved = True              pos : neg    =      5.5 : 1.0
+                    poor = True              neg : pos    =      5.5 : 1.0
+                 enjoyed = True              pos : neg    =      5.4 : 1.0
+                  runway = True              neg : pos    =      5.3 : 1.0
+               attentive = True              pos : neg    =      5.3 : 1.0
+               courteous = True              pos : neg    =      5.2 : 1.0
+                annoying = True              neg : pos    =      5.2 : 1.0
+                   april = True              neg : pos    =      5.2 : 1.0
+               treatment = True              neg : pos    =      5.2 : 1.0
+                smoothly = True              pos : neg    =      5.2 : 1.0
+                 charged = True              neg : pos    =      5.2 : 1.0
+            professional = True              pos : neg    =      5.2 : 1.0
+                    cold = True              neg : pos    =      5.0 : 1.0
+                  showed = True              neg : pos    =      5.0 : 1.0
+                     pod = True              pos : neg    =      5.0 : 1.0
+                    rome = True              pos : neg    =      5.0 : 1.0
+                 armrest = True              neg : pos    =      4.9 : 1.0
+                switched = True              neg : pos    =      4.9 : 1.0
+                    fell = True              neg : pos    =      4.9 : 1.0
+                  injury = True              neg : pos    =      4.9 : 1.0
+                    fuel = True              neg : pos    =      4.9 : 1.0
+                  nickel = True              neg : pos    =      4.9 : 1.0
+                 biggest = True              neg : pos    =      4.9 : 1.0
+               edinburgh = True              neg : pos    =      4.9 : 1.0
+                 realize = True              neg : pos    =      4.9 : 1.0
+                    suck = True              neg : pos    =      4.9 : 1.0
+                    male = True              neg : pos    =      4.9 : 1.0
+                    easy = True              pos : neg    =      4.9 : 1.0
+                 toronto = True              neg : pos    =      4.8 : 1.0
+                    pick = True              neg : pos    =      4.8 : 1.0
+                 advised = True              neg : pos    =      4.8 : 1.0
+                  policy = True              neg : pos    =      4.8 : 1.0
+              travelling = True              neg : pos    =      4.8 : 1.0
+                   woman = True              neg : pos    =      4.8 : 1.0
+                    idea = True              neg : pos    =      4.8 : 1.0
+                      .. = True              neg : pos    =      4.8 : 1.0
+                 refused = True              neg : pos    =      4.8 : 1.0
+                 handled = True              pos : neg    =      4.4 : 1.0
+                 updated = True              pos : neg    =      4.4 : 1.0
+                    spot = True              pos : neg    =      4.4 : 1.0
+                 tuesday = True              pos : neg    =      4.4 : 1.0
+refsets = collections.defaultdict(set)
+testsets = collections.defaultdict(set)
+ 
+for i, (feats, label) in enumerate(train_set):
+    refsets[label].add(i)
+    observed = nb_classifier.classify(feats)
+    testsets[observed].add(i)
+    
+print('pos precision:', precision(refsets['pos'], testsets['pos']))
+print('pos recall:', recall(refsets['pos'], testsets['pos']))
+print('pos F-measure:', f_measure(refsets['pos'], testsets['pos']))
+print('neg precision:', precision(refsets['neg'], testsets['neg']))
+print('neg recall:', recall(refsets['neg'], testsets['neg']))
+print('neg F-measure:', f_measure(refsets['neg'], testsets['neg']))
+pos precision: 0.9532650448143406
+pos recall: 0.8572251007484168
+pos F-measure: 0.902697787208245
+neg precision: 0.8548009367681498
+neg recall: 0.9523809523809523
+neg F-measure: 0.9009564949089788
+SVM_classifier = SklearnClassifier(SVC(), sparse=False).train(train_set)
+
+print(accuracy(SVM_classifier, test_set))
+
+for i, (feats, label) in enumerate(test_set):
+    refsets[label].add(i)
+    observed = dt_classifier.classify(feats)
+    testsets[observed].add(i)
+
+print('pos precision:', precision(refsets['pos'], testsets['pos']))
+print('pos recall:', recall(refsets['pos'], testsets['pos']))
+print('pos F-measure:', f_measure(refsets['pos'], testsets['pos']))
+print('neg precision:', precision(refsets['neg'], testsets['neg']))
+print('neg recall:', recall(refsets['neg'], testsets['neg']))
+print('neg F-measure:', f_measure(refsets['neg'], testsets['neg']))
+0.6
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-70-c887e6d5eec9> in <module>()
+      4 
+      5 for i, (feats, label) in enumerate(test_set):
+----> 6     refsets[label].add(i)
+      7     observed = dt_classifier.classify(feats)
+      8     testsets[observed].add(i)
+
+NameError: name 'refsets' is not defined
+logit_classifier = MaxentClassifier.train(train_set, algorithm='gis', trace=0, max_iter=10, min_lldelta=0.5)
+
+print(accuracy(logit_classifier, test_set))
+
+for i, (feats, label) in enumerate(test_feats):
+    refsets[label].add(i)
+    observed = logit_classifier.classify(feats)
+    testsets[observed].add(i)
+dt_classifier = DecisionTreeClassifier.train(train_set, 
+                                             binary=True, 
+                                             entropy_cutoff=0.8, 
+                                             depth_cutoff=5, 
+                                             support_cutoff=30)
+accuracy(dt_classifier, test_set)
+
+for i, (feats, label) in enumerate(test_set):
+    refsets[label].add(i)
+    observed = dt_classifier.classify(feats)
+    testsets[observed].add(i)
+    
+print('pos precision:', precision(refsets['pos'], testsets['pos']))
+print('pos recall:', recall(refsets['pos'], testsets['pos']))
+print('pos F-measure:', f_measure(refsets['pos'], testsets['pos']))
+print('neg precision:', precision(refsets['neg'], testsets['neg']))
+print('neg recall:', recall(refsets['neg'], testsets['neg']))
+print('neg F-measure:', f_measure(refsets['neg'], testsets['neg']))
